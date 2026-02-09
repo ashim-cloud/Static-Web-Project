@@ -2,313 +2,216 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ASHIM - Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Free Digital Books</title>
+
   <style>
-    /* Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&family=Roboto:wght@400;700&display=swap');
-
-    /* Base */
-    :root { 
-        --accent:#b23b3b; 
-        --link-color: #0056b3; 
-        --link-hover-color: #007bff; 
-    }
-    * { box-sizing: border-box; }
-
     body {
       margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: #f0f0f0;
-      color: #111;
-      font-family: 'Roboto', sans-serif;
-      transition: background .3s, color .3s;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fafafa;
+      color: #222;
     }
 
-    /* Intro (upper layer) */
-    .intro-box {
-      background: linear-gradient(145deg, #ffffff, #f7f7f7);
-      padding: clamp(40px, 6vw, 90px) clamp(48px, 7vw, 120px);
-      border-radius: 20px;
-      box-shadow: 0 12px 35px rgba(0,0,0,.18);
-      text-align: center;
-      position: relative;
-      width: min(90vw, 820px);
-      animation: pop .6s ease-in-out;
+    header {
+      padding: 20px 40px;
+      background: #ffffff;
+      border-bottom: 1px solid #eaeaea;
     }
 
-    @keyframes pop { from { transform:scale(.92); opacity:0 } to { transform:scale(1); opacity:1 } }
-    @keyframes vanish { to { opacity:0; transform: scale(.95); filter: blur(2px); } }
-
-    .intro-box.fade-out { animation: vanish .45s ease forwards; }
-
-    .intro-box h1 {
+    header h1 {
       margin: 0;
-      font-size: clamp(44px, 8vw, 72px);
-      font-family: 'Oswald', sans-serif;
-      font-style: italic;
-      font-weight: 600;
-      letter-spacing: 1px;
+      font-size: 26px;
     }
 
-    .tagline { font-size: clamp(16px, 2.2vw, 22px); margin: 12px 0 22px; font-weight: 600; color:#444 }
-
-    .intro-box p { margin: 6px 0; font-size: clamp(14px, 1.8vw, 18px); color:#555 }
-
-    /* Top-right controls */
-    .controls { position:absolute; top:10px; right:16px; display:flex; gap:10px; align-items:center; }
-
-    /* Close (thin maroon-red) */
-    .close-btn { font-size: 18px; color: var(--accent); cursor:pointer; font-weight:500; line-height: 1; padding:4px 6px; }
-
-    /* Links */
-    a, a:visited, a:active { text-decoration: none; transition: color .2s ease-in-out; }
-    .intro-box p a, .contact-link { color: var(--link-color); }
-    .intro-box p a:hover, .contact-link:hover { color: var(--link-hover-color); }
-
-    .link-anim { position: relative; padding-bottom: 2px; }
-    .link-anim::before, .link-anim::after {
-      content:""; position:absolute; bottom:0; height:2px; width:0; background: currentColor; transition: width .3s ease; }
-    .link-anim::before { left:0; }
-    .link-anim::after { right:0; }
-    .link-anim:hover::before, .link-anim:hover::after { width:50%; }
-
-    /* Selection (drag) shadow */
-    ::selection { background:#e2e2e2; text-shadow: 1px 1px 2px rgba(0,0,0,.25); }
-    
-    /* Add subtle hover text shadow to key lines */
-    .hover-shadow:hover { text-shadow: 0 1px 6px rgba(0,0,0,.22); }
-    
-    /* Lower layer */
-    .about-me {
-      display: none;
-      background:#fff; color:inherit;
-      padding: clamp(18px, 3vw, 30px);
-      border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(0,0,0,.15);
-      width: min(92vw, 1000px);
-      max-height: 90vh; overflow:auto;
-      animation: fadeIn .45s ease;
+    header p {
+      margin-top: 5px;
+      color: #666;
     }
 
-    @keyframes fadeIn { from { opacity:0; transform: translateY(18px) } to { opacity:1; transform:none } }
-
-    .section { margin-bottom: 24px; }
-    .section h2 { 
-        font-size: clamp(18px,2.2vw,24px); 
-        margin: 0 0 10px; 
-        border-left:4px solid #0077b6; 
-        padding-left:10px; 
-        color: #0077b6;
+    .container {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 30px;
+      padding: 40px;
     }
 
-    .skills, .projects { display:flex; flex-wrap: wrap; gap: 12px; }
-    .card {
-      background:#fafafa; border-radius:10px; padding: 10px 14px; box-shadow:0 3px 8px rgba(0,0,0,.1);
-      font-weight:500; flex: 1 1 150px; text-align:center; cursor:pointer; transition: box-shadow .25s, background .25s, transform .12s;
-      position: relative; 
-    }
-    .card:hover { 
-        transform: translateY(-2px); 
-        background: #eef6ff;
-        box-shadow: 0 5px 12px rgba(0,0,0,.12);
+    .books {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 25px;
     }
 
-    /* Tooltip appears outside the box */
-    .bluehover::after {
-        content: 'Click here for details';
-        position: absolute;
-        bottom: 100%; 
-        left: 50%;
-        transform: translateX(-50%);
-        margin-bottom: 8px; 
-        background: #282828; 
-        color: white;
-        padding: 6px 12px;
-        border-radius: 4px;
-        font-size: 13px;
-        font-weight: 500;
-        opacity: 0;
-        transition: opacity 0.2s ease-in-out;
-        pointer-events: none;
-        white-space: nowrap;
-        z-index: 10;
-    }
-    .bluehover:hover::after {
-        opacity: 1;
+    .book-card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    /* Overlay (upper-layer modals) */
-    .overlay {
-      display: none;
-      position: fixed; inset:0; background: rgba(0,0,0,.6);
-      align-items:center; justify-content:center; padding: 6vh 4vw; z-index: 50;
+    .book-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
     }
 
-    .overlay-content {
-      background:#fff; color:inherit; border-radius:12px;
-      width: min(92vw, 900px);
-      max-height: 86vh; overflow:auto;
-      box-shadow: 0 5px 20px rgba(0,0,0,.3);
-      padding: clamp(18px, 3vw, 28px);
-      animation: pop .35s ease;
+    .book-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
     }
-    
-    .overlay-content h3 { margin-top: 0; color: #0077b6; }
-    .overlay-content ul { padding-left: 20px; text-align: left;}
-    .overlay-content li { margin-bottom: 8px; }
 
-    .close-overlay { float:right; font-size:18px; color: var(--accent); cursor:pointer; font-weight:500; }
+    .book-content {
+      padding: 15px;
+    }
 
-    /* Utility */
-    .muted { opacity:.7 }
+    .book-content h3 {
+      margin: 0;
+      font-size: 18px;
+    }
 
+    .author {
+      font-size: 14px;
+      color: #777;
+      margin: 5px 0 10px;
+    }
+
+    .desc {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .book-card a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Ad section */
+    .ad-box {
+      position: sticky;
+      top: 30px;
+      background: #ffffff;
+      border: 2px dashed #ccc;
+      border-radius: 12px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .ad-box span {
+      display: block;
+      font-size: 12px;
+      margin-top: 10px;
+      color: #aaa;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #888;
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="intro-box" id="intro">
-    <div class="controls">
-      <span class="close-btn" id="introClose" title="Close">X</span>
-    </div>
 
-    <h1 class="hover-shadow">ASHIM</h1>
-    <p class="tagline hover-shadow">Cloud & DevOps Enthusiast | Chennai</p>
-    <p>📞 +91 9344675268 · ✉️ <a class="link-anim" href="mailto:ashimmunvar4@gmail.com" target="_blank" rel="noopener">ashimmunvar4@gmail.com</a></p>
-    <p>
-      <a class="link-anim" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
-      |
-      <a class="link-anim" href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
-    </p>
-  </div>
+<header>
+  <h1>📚 Free Digital Books</h1>
+  <p>Minimal cost architecture • Open knowledge • Ad-supported</p>
+</header>
 
-  <div class="about-me" id="about">
-    <div class="section">
-      <h2>About Me</h2>
-      <p class="hover-shadow">Aspiring <b>Cloud & DevOps Engineer</b> with hands-on experience in AWS and DevOps tools. Passionate about automation, scalable infrastructure, and continuous learning.</p>
-    </div>
+<div class="container">
 
-    <div class="section">
-      <h2>Education</h2>
-      <p class="muted">BCA — Dr. MGR Chockalingam College (Jun 2022 – May 2025) · Progress: <b>80%</b> · <i>No Arrears</i></p>
-    </div>
+  <!-- BOOK SECTION -->
+  <div class="books">
 
-    <div class="section">
-      <h2>Skills</h2>
-      <div class="skills">
-        <div class="card bluehover" onclick="openOverlay('aws')">AWS</div>
-        <div class="card">Docker</div>
-        <div class="card">Terraform</div>
-        <div class="card">Jenkins</div>
-        <div class="card">Ansible</div>
-        <div class="card">Kubernetes</div>
-        <div class="card">Prometheus</div>
-        <div class="card">Grafana</div>
-        <div class="card">Linux</div>
+    <!-- Atomic Habits -->
+    <a href="https://drive.google.com/file/d/1bZlpsA1N2b1EALIKBS4pBqMFH6lPRfJs/view" target="_blank">
+      <div class="book-card">
+        <img src="https://m.media-amazon.com/images/I/91bYsX41DVL._AC_UF1000,1000_QL80_.jpg" alt="Atomic Habits">
+        <div class="book-content">
+          <h3>Atomic Habits</h3>
+          <div class="author">James Clear</div>
+          <div class="desc">
+            A practical guide on how small habits compound into remarkable results over time.
+          </div>
+        </div>
       </div>
-    </div>
+    </a>
 
-    <div class="section">
-      <h2>Projects</h2>
-      <div class="projects">
-        <div class="card bluehover" onclick="openOverlay('project1')">3‑Tier Student Mgmt App</div>
-        <div class="card bluehover" onclick="openOverlay('project2')">CI/CD Pipeline</div>
+    <!-- Ikigai -->
+    <a href="https://drive.google.com/file/d/1lifXN-KBhk78rfn7z2y0daPKa7yrm0jO/view" target="_blank">
+      <div class="book-card">
+        <img src="https://m.media-amazon.com/images/I/71cRwWclCvL._UF1000,1000_QL80_.jpg" alt="Ikigai">
+        <div class="book-content">
+          <h3>Ikigai</h3>
+          <div class="author">Héctor García & Francesc Miralles</div>
+          <div class="desc">
+            Discover the Japanese philosophy of finding purpose and joy in everyday life.
+          </div>
+        </div>
       </div>
-    </div>
+    </a>
 
-    <div class="section">
-      <h2>Certifications</h2>
-      <ul>
-        <li>AWS DevOps Full Stack — SLA Training Center</li>
-        <li>Google Cloud Computing Foundations — Google Cloud Skills Boost</li>
-      </ul>
-    </div>
+    <!-- 48 Laws of Power -->
+    <a href="https://drive.google.com/file/d/1ta2DDxjS_sOMg1LLAa9bWwhz9Q8RkGPv/view" target="_blank">
+      <div class="book-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi7_zF5PdUAjjpExGjox9t7xNttjtmThrza86TxNze8rwG3DcBIfgY2VScboJaysHqBgr3LeVoV68X2V7ENg_u_6Wfk7ZJInWZXIvz_dymIA&s=10" alt="48 Laws of Power">
+        <div class="book-content">
+          <h3>The 48 Laws of Power</h3>
+          <div class="author">Robert Greene</div>
+          <div class="desc">
+            A bold exploration of power, strategy, manipulation, and influence.
+          </div>
+        </div>
+      </div>
+    </a>
 
-    <div class="section">
-        <h2>Contact</h2>
-        <p>📞 +91 9344675268 | ✉️ <a class="contact-link" href="mailto:ashimmunvar4@gmail.com">ashimmunvar4@gmail.com</a></p>
-    </div>
-    
+    <!-- Psychology of Money -->
+    <a href="https://drive.google.com/file/d/13zn69-Ra_R3LiKjfmNd03pvraDiCnm3p/view" target="_blank">
+      <div class="book-card">
+        <img src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1581527774i/41881472.jpg" alt="Psychology of Money">
+        <div class="book-content">
+          <h3>The Psychology of Money</h3>
+          <div class="author">Morgan Housel</div>
+          <div class="desc">
+            Timeless lessons on wealth, greed, happiness, and financial behavior.
+          </div>
+        </div>
+      </div>
+    </a>
+
   </div>
 
-  <div class="overlay" id="overlay" role="dialog" aria-modal="true">
-    <div class="overlay-content" id="overlay-content">
-      <span class="close-overlay" onclick="closeOverlay()" title="Close">X</span>
-      <div id="overlay-text"></div>
+  <!-- AD SECTION -->
+  <div class="ad-box">
+    <div>
+      Google AdSense<br/>
+      <strong>[ Ad Blocked ]</strong>
+      <span>
+        Ads enabled for monetization<br/>
+        (Blocked by AdBlock)
+      </span>
     </div>
   </div>
 
-  <script>
-    // Close intro with clean animation
-    document.getElementById('introClose').addEventListener('click', () => {
-      const intro = document.getElementById('intro');
-      intro.classList.add('fade-out');
-      setTimeout(() => {
-        intro.style.display = 'none';
-        document.getElementById('about').style.display = 'block';
-      }, 460);
-    });
+</div>
 
-    // Overlay helpers
-    const overlay = document.getElementById('overlay');
-    const overlayText = document.getElementById('overlay-text');
+<footer>
+  © 2026 • Low-Cost Static Hosting Demo • Trainee Project
+</footer>
 
-    function openOverlay(type) {
-      if (type === 'aws') {
-        overlayText.innerHTML = `
-          <h3>AWS Services</h3>
-          <div class="skills">
-            <div class="card">EC2</div><div class="card">S3</div><div class="card">IAM</div>
-            <div class="card">VPC</div><div class="card">SNS</div><div class="card">SQS</div>
-            <div class="card">Route&nbsp;53</div><div class="card">CloudWatch</div><div class="card">RDS</div>
-            <div class="card">Auto&nbsp;Scaling</div><div class="card">Load&nbsp;Balancer</div><div class="card">CloudFront</div>
-            <div class="card">DynamoDB</div><div class="card">CloudTrail</div><div class="card">EBS</div>
-            <div class="card">EFS</div><div class="card">ACM</div><div class="card">WAF</div>
-            <div class="card">EKS</div>
-          </div>`;
-      }
-      if (type === 'project1') {
-        overlayText.innerHTML = `
-          <h3>3‑Tier Student Management App</h3>
-          <ul>
-            <li>Deployed inside a custom VPC with secure subnets and routing.</li>
-            <li>Used ALB + Auto Scaling for high availability and elasticity.</li>
-            <li>MySQL on RDS handled persistence with backups enabled.</li>
-            <li>CloudWatch monitored health; HTTPS via ACM + Route&nbsp;53.</li>
-          </ul>`;
-      }
-      if (type === 'project2') {
-        overlayText.innerHTML = `
-          <h3>CI/CD Pipeline</h3>
-          <ul>
-            <li>Jenkins automated build/test triggered from GitHub webhooks.</li>
-            <li>Terraform provisioned infra; Ansible handled configuration.</li>
-            <li>Dockerized app deployed on Kubernetes for scalability.</li>
-            <li>Trivy scans enforced image security in the pipeline.</li>
-          </ul>`;
-      }
-
-      overlay.style.display = 'flex';
-    }
-
-    function closeOverlay() { overlay.style.display = 'none'; }
-
-    // Close overlay by clicking the dim background
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeOverlay();
-    });
-
-    // Close overlay with the 'Escape' key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === "Escape" && overlay.style.display === 'flex') {
-            closeOverlay();
-        }
-    });
-
-    // Expose functions to global for inline onclick
-    window.openOverlay = openOverlay;
-    window.closeOverlay = closeOverlay;
-  </script>
 </body>
 </html>
